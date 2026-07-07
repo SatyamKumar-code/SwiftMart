@@ -7,8 +7,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "migrate:dev": "drizzle-kit generate:pg --out migrations && drizzle-kit push:pg",
-    "migrate:prod": "drizzle-kit push:pg"
+    "db:push": "drizzle-kit push"
   },
   "keywords": [],
   "author": "",
