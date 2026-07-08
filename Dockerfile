@@ -2,7 +2,7 @@
 
 # --- Stage 1: build the SPA (Vite) ---
 # Produces static HTML/JS/CSS unser dist/ - copied into the final image as ./public.
-FROM node:22-bookworn-slim AS frontend-build
+FROM node:22-bookworm-slim AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/ ./
 #Empty = browser call /api on the same host as the page (same domin as Express).
@@ -15,7 +15,7 @@ RUN npm install --no-audit --no-fund \
 
 # --- stage 2: compile the API (TypeScript to JavaScript) ---
 # Produces dist/ with index.js and the rest of the server bundle.
-FROM node:22-bookworn-slim AS backend-build
+FROM node:22-bookworm-slim AS backend-build
 WORKDIR /app
 COPY backend/ ./
 RUN npm install --no-audit --no-fund \
@@ -23,7 +23,7 @@ RUN npm install --no-audit --no-fund \
 
 # --- Stage 3: runtime image (only prod deps + built assets) ---
 # Express server ApI rountes ans static files from public/ (the Vite build from stage 1).
-FROM node:22-bookworn-slim AS runner
+FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
