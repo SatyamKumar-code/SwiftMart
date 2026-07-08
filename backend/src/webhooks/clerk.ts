@@ -16,18 +16,8 @@ export async function clerkWebhookHandler(req: Request, res: Response) {
             return;
         }
 
-        // Clerk's verifier expects a Web Request with the rew body; Express my give Buffer or String.
-        const payload = req.body instanceof Buffer ? req.body.toString("utf8") : String(req.body);
-
-        const webRequest = new Request("http://internal/webhook/clerk", {
-            method: "POST",
-            headers: new Headers(req.headers as HeadersInit),
-            body: payload,
-        })
-
-        // throw if singanture is wrong or body was tampered with; only then we trust evt.
-        // verifyWebhook expects an Express Request type; cast to any to satisfy TypeScript here
-        const evt = await verifyWebhook(webRequest as any, { signingSecret: env.CLERK_WEBHOOK_SECRET });
+        // verifyWebhook needs the original Express request so it can read the Svix headers and raw body.
+        const evt = await verifyWebhook(req as any, { signingSecret: env.CLERK_WEBHOOK_SECRET });
 
         if(evt.type === "user.created" || evt.type === "user.updated") {
             const u = evt.data;
