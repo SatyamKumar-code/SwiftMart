@@ -2,7 +2,7 @@ import { getAuth } from "@clerk/express";
 import type { Request, Response, NextFunction } from "express";
 import { getLocalUser } from "../lib/users";
 import { isAdmin } from "../lib/roles";
-import { ImageKit } from "@imagekit/nodejs/client.mjs";
+import ImageKit from "@imagekit/nodejs";
 import { getEnv } from "../lib/env";
 import { db } from "../db";
 import { orderItems, products } from "../db/schema";
