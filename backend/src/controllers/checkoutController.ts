@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { getEnv } from "../lib/env";
-import z, { set } from "zod";
+import z from "zod";
 import { getAuth } from "@clerk/express";
 import { getLocalUser } from "../lib/users";
 import { CheckoutSessionLine, checkoutSessions, products } from "../db/schema";
