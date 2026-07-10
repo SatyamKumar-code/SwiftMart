@@ -20,6 +20,7 @@ import adminRouter from "./routes/adminRouter";
 
 import { polarWebhookHandler } from "./webhooks/polar";
 import { sentryClerkUserMiddleware } from "./middleware/sentryClerkUser";
+import orderRouter from "./routes/orderRouter";
 
 const env = getEnv()
 const app = express();
@@ -48,6 +49,7 @@ app.use("/api/products", productRouter);
 app.use("/api/stream", streamRouter);
 app.use("/api/checkout", checkoutRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/orders", orderRouter);
 
 const publicDir = path.join(process.cwd(), "public")
 if (fs.existsSync(publicDir)) {
