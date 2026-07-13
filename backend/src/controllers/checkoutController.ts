@@ -84,7 +84,7 @@ export async function createCheckout(req: Request, res: Response, next: NextFunc
                 userId: localUser.id,
                 lines,
                 totalCents: totalAmount,
-                currency: "INR",
+                currency: "inr",
             })
             .returning();
 
@@ -98,7 +98,7 @@ export async function createCheckout(req: Request, res: Response, next: NextFunc
                     {
                         amount_type: "fixed",
                         price_amount: totalAmount,
-                        price_currency: "INR",
+                        price_currency: "inr",
                     }
                 ]
             },

@@ -26,6 +26,8 @@ Sentry.init({
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration({
       maskAllText: false,
+      maskAllInputs: false,
+      blockAllMedia: false,
     })
   ],
   tracesSampleRate: 1.0,
