@@ -29,7 +29,7 @@ export async function listOrders(req: Request, res: Response, next: NextFunction
             : await db
                 .select()
                 .from(orders)
-                .where(eq(orders.userId, userId))
+                .where(eq(orders.userId, localUser.id))
                 .orderBy(desc(orders.createdAt));
 
         const orderIds = rows.map((row) => row.id);
@@ -250,7 +250,7 @@ export async function createVideoInvite(req: Request, res: Response, next: NextF
             },
         });
 
-        res.json({ ok : true, joinUrl });
+        res.json({ ok: true, joinUrl });
 
     } catch (error) {
         next(error);
