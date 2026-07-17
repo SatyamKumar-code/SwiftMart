@@ -170,7 +170,7 @@ export async function deleteAdminProduct(req: Request, res: Response, next: Next
     await deleteImageKitAsset(env, existing.imageKitFileId);
     await db.delete(products).where(eq(products.id, id));
 
-    res.status(204).end();
+    res.json({ ok: true }).end();
     
     } catch (error) {
         next(error);
