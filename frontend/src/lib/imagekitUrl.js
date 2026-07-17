@@ -26,7 +26,7 @@ function buildNorthwindTextLayer({ w, h }) {
   else if (maxDim <= 400) fs = 16;
   else if (maxDim <= 700) fs = 22;
   else fs = 30;
-  return `l-text,i-Northwind,fs-${fs},co-FFFFFF,bg-0F172A90,pa-8_12,lx-N14,ly-14,lap-top_right,l-end`;
+  return `l-text,i-SwiftMart,fs-${fs},co-FFFFFF,bg-0F172A90,pa-8_12,lx-N14,ly-14,lap-top_right,l-end`;
 }
 
 /**
