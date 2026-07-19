@@ -1,4 +1,5 @@
 import { HeadphonesIcon, VideoIcon } from "lucide-react";
+import { Link } from "react-router";
 import { OrderChatPanelSkeleton } from "../components/LoadingSkeletons.jsx";
 import { PageError } from "../components/PageError.jsx";
 import { useOrderChatPage } from "../hooks/useOrderChatPage.js";
@@ -8,10 +9,49 @@ import {
   ChannelHeader,
   MessageList,
   MessageInput,
+  MessageSimple,
   Thread,
   Window,
+  useChatContext,
+  useMessageContext,
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/v2/index.css";
+
+const CustomMessage = (props) => {
+  const { client } = useChatContext();
+  const { message } = useMessageContext();
+  const isVideoInvite = message?.video_invite || message?.custom?.video_invite;
+  const joinUrl = message?.join_url || message?.custom?.join_url;
+
+  if (isVideoInvite && joinUrl) {
+    let path = joinUrl;
+    try {
+      const url = new URL(joinUrl);
+      path = url.pathname + url.search + url.hash;
+    } catch (e) {
+      // fallback
+    }
+
+    const isMyMessage = message?.user?.id === client?.userID;
+
+    return (
+      <div className={`flex flex-col ${isMyMessage ? "items-end" : "items-start"}`}>
+        {/* <MessageSimple {...props} /> */}
+        <div className={`mt-1 pb-3 ${isMyMessage ? "pr-4" : "pl-12"}`}>
+          <Link
+            to={path}
+            className="btn btn-primary btn-sm gap-2"
+          >
+            <VideoIcon className="size-4" aria-hidden />
+            Join video call
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return <MessageSimple {...props} />;
+};
 
 function OrderChatPage() {
   const { paid, client, error, channel, canInvite, inviteMutation } = useOrderChatPage();
@@ -77,7 +117,7 @@ function OrderChatPage() {
           <Channel channel={channel}>
             <Window>
               <ChannelHeader />
-              <MessageList />
+              <MessageList Message={CustomMessage} />
               <MessageInput focus />
             </Window>
             <Thread />
